@@ -95,13 +95,25 @@ Os dados apresentados foram extraídos de fontes oficiais e confiáveis, incluin
 
     <div class="section" id="reservatorios">
       <h2>Reservatórios abaixo da capacidade</h2>
-      <p>Esta visualização mostra o percentual de reservatórios hídricos monitorados pela Agência Nacional de Águas (ANA) que operaram em níveis críticos em 2022. Esses reservatórios são fundamentais para o abastecimento humano, irrigação e produção de energia.</p>
+<p>
+  Esta visualização apresenta o percentual de reservatórios hídricos que operaram com níveis inferiores a 30% da sua capacidade útil, condição considerada crítica segundo os critérios da Agência Nacional de Águas e Saneamento Básico (ANA). Os dados refletem o monitoramento feito em 2022, mas crises mais recentes — como a estiagem prolongada no Nordeste e em parte do Centro-Oeste em 2023 — acentuaram o problema em algumas bacias hidrográficas.
+</p>
+<p>
+  Esses reservatórios são essenciais para o abastecimento público, irrigação agrícola, geração de energia hidrelétrica e manutenção dos ecossistemas aquáticos. Segundo boletins de situação hídrica publicados pela ANA em 2023, cerca de <strong>20 a 40% dos principais reservatórios do país apresentaram níveis de atenção ou alerta</strong>, especialmente nas regiões semiáridas.
+</p>
+<p>
+  A região Sudeste, embora com boa infraestrutura, já enfrentou crises severas como a de 2014-2015. Já o Nordeste e o Norte enfrentam desafios históricos devido à escassez pluviométrica, má distribuição da infraestrutura de reservação e forte dependência das chuvas.
+</p>
+<p>
+  <strong>Fonte:</strong> Relatórios técnicos da ANA (2022 e 2023) e Painel de Monitoramento Hidrológico Nacional. Acesse: <a href="https://www.gov.br/ana/pt-br" target="_blank">www.gov.br/ana</a>
+</p>
+      
       <canvas id="chartReservatorios"></canvas>
     </div>
 
     <div class="section" id="mapa">
       <h2>Mapa Interativo da Situação Hídrica</h2>
-      <p>O mapa a seguir mostra a divisão das regiões brasileiras, com marcadores interativos indicando as principais características relacionadas à disponibilidade hídrica. Os dados se baseiam em indicadores da ANA e do IBGE.</p>
+      <p>O mapa abaixo mostra a divisão das cinco grandes regiões do Brasil, com marcadores interativos que destacam suas principais características relacionadas à água potável, coleta de esgoto, perda na distribuição e pluviometria. As informações são baseadas em dados do Sistema Nacional de Informações sobre Saneamento (SNIS), Instituto Nacional de Meteorologia (INMET) e Agência Nacional de Águas (ANA), com referência ao ano de 2022.</p>
       <div id="mapid"></div>
     </div>
 
@@ -118,7 +130,7 @@ Os dados apresentados foram extraídos de fontes oficiais e confiáveis, incluin
         <li>Feche a torneira enquanto escova os dentes ou lava a louça.</li>
         <li>Reaproveite água da chuva para irrigação e limpeza.</li>
         <li>Conserte vazamentos imediatamente.</li>
-        <li><a href="https://www.youtube.com/watch?v=J6v9-VJgULw" target="_blank">Vídeo: Como economizar água em casa (YouTube)</a></li>
+        <li><a href="https://www.youtube.com/watch?v=FBrFO_y2eks&ab_channel=VidanaPraia%F0%9F%8C%B4" target="_blank">Vídeo: Dica de captação da agua da chuva. (YouTube)</a></li>
         <li><a href="https://www.gov.br/ana/pt-br" target="_blank">Agência Nacional de Águas - ANA</a></li>
         <li><a href="https://www.un.org/sustainabledevelopment/pt/water-and-sanitation/" target="_blank">ODS 6 na ONU</a></li>
       </ul>
@@ -183,14 +195,80 @@ Os dados apresentados foram extraídos de fontes oficiais e confiáveis, incluin
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-    const regioes = [
-      { nome: 'Norte – Baixo acesso à água tratada', lat: -1.45, lon: -48.5 },
-      { nome: 'Nordeste – Alta vulnerabilidade hídrica', lat: -8.05, lon: -34.9 },
-      { nome: 'Sudeste – Alta cobertura e consumo', lat: -23.5, lon: -46.6 },
-      { nome: 'Sul – Bons índices de tratamento', lat: -30.0, lon: -51.2 },
-      { nome: 'Centro-Oeste – Média estrutura e perdas', lat: -15.6, lon: -56.1 }
-    ];
-    regioes.forEach(r => L.marker([r.lat, r.lon]).addTo(map).bindPopup(`<b>${r.nome}</b>`));
+   const regioes = [
+  {
+    nome: 'Norte',
+    lat: -1.45,
+    lon: -48.5,
+    info: `
+      <b>Região Norte</b><br>
+      - Acesso à água tratada: 58.3%<br>
+      - Coleta de esgoto: 21.7%<br>
+      - Perda na distribuição: 43.8%<br>
+      - Pluviometria média: 2200 mm<br>
+      - Desafios: baixa cobertura de saneamento e grandes distâncias logísticas.
+    `
+  },
+  {
+    nome: 'Nordeste',
+    lat: -8.05,
+    lon: -34.9,
+    info: `
+      <b>Região Nordeste</b><br>
+      - Acesso à água tratada: 67.4%<br>
+      - Coleta de esgoto: 28.5%<br>
+      - Perda na distribuição: 45.3%<br>
+      - Pluviometria média: 800 mm<br>
+      - Desafios: escassez histórica e seca prolongada.
+    `
+  },
+  {
+    nome: 'Sudeste',
+    lat: -23.5,
+    lon: -46.6,
+    info: `
+      <b>Região Sudeste</b><br>
+      - Acesso à água tratada: 94.2%<br>
+      - Coleta de esgoto: 88.6%<br>
+      - Perda na distribuição: 35.2%<br>
+      - Pluviometria média: 1200 mm<br>
+      - Destaques: melhor infraestrutura e consumo elevado.
+    `
+  },
+  {
+    nome: 'Sul',
+    lat: -30.0,
+    lon: -51.2,
+    info: `
+      <b>Região Sul</b><br>
+      - Acesso à água tratada: 92.8%<br>
+      - Coleta de esgoto: 79.2%<br>
+      - Perda na distribuição: 37.1%<br>
+      - Pluviometria média: 1600 mm<br>
+      - Destaques: bons índices, mas vulnerável a enchentes.
+    `
+  },
+  {
+    nome: 'Centro-Oeste',
+    lat: -15.6,
+    lon: -56.1,
+    info: `
+      <b>Região Centro-Oeste</b><br>
+      - Acesso à água tratada: 86.1%<br>
+      - Coleta de esgoto: 53.9%<br>
+      - Perda na distribuição: 39.6%<br>
+      - Pluviometria média: 1400 mm<br>
+      - Observação: expansão urbana desafia saneamento.
+    `
+  }
+];
+
+regioes.forEach(r => {
+  L.marker([r.lat, r.lon])
+    .addTo(map)
+    .bindPopup(r.info);
+});
+
   </script>
 </body>
 </html>
