@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
-     body {
+    body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #eef2f7;
       margin: 0;
@@ -172,9 +172,7 @@ Os dados apresentados foram extraídos de fontes oficiais e confiáveis, incluin
           ]
         }]
       },
-      options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true, max: 100 } }
+      options: { responsive: true }
     });
 
     const ctxChuvas = document.getElementById('chartChuvas').getContext('2d');
