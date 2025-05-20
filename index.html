@@ -178,7 +178,9 @@ Os dados apresentados foram extraídos de fontes oficiais e confiáveis, incluin
           ]
         }]
       },
-      options: { responsive: true }
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 100 } }
     });
 
     const ctxChuvas = document.getElementById('chartChuvas').getContext('2d');
