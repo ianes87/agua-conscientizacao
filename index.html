@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informativo Hídrico e Conscientização - ODS 6</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #005fa3;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    .section {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    canvas {
+      width: 100% !important;
+      height: 400px !important;
+    }
+    #mapid {
+      height: 400px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    ul, p {
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Informativo sobre Água no Brasil</h1>
+    <p>Conscientização e dados ambientais relacionados à ODS 6 - Água potável e saneamento</p>
+  </header>
+
+  <nav>
+    <a href="#intro">Introdução</a>
+    <a href="#agua">Água Tratada</a>
+    <a href="#reservatorios">Reservatórios</a>
+    <a href="#mapa">Mapa</a>
+    <a href="#chuvas">Chuvas</a>
+    <a href="#dicas">Conscientização</a>
+  </nav>
+
+  <div class="container">
+    <div class="section" id="intro">
+      <h2>22 de Março – Dia Mundial da Água e ODS 6</h2>
+      <p>O Dia Mundial da Água, celebrado em 22 de março, é uma data instituída pela ONU para destacar a importância da água doce e defender o manejo sustentável dos recursos hídricos. A ODS 6 da Agenda 2030 busca assegurar a disponibilidade e gestão sustentável da água e saneamento para todos.</p>
+    </div>
+
+    <div class="section" id="agua">
+      <h2>Acesso à água tratada por região</h2>
+      <p>Os dados abaixo mostram o percentual da população com acesso à água tratada em cada região do Brasil, segundo o Sistema Nacional de Informações sobre Saneamento (SNIS) e o IBGE, ano base 2022. Esses números são essenciais para entender os desafios enfrentados por regiões com menor infraestrutura de saneamento básico.</p>
+      <canvas id="chartAgua"></canvas>
+    </div>
+
+    <div class="section" id="reservatorios">
+      <h2>Reservatórios abaixo da capacidade</h2>
+      <p>Esta visualização mostra o percentual de reservatórios hídricos monitorados pela Agência Nacional de Águas (ANA) que operaram em níveis críticos em 2022. Esses reservatórios são fundamentais para o abastecimento humano, irrigação e produção de energia.</p>
+      <canvas id="chartReservatorios"></canvas>
+    </div>
+
+    <div class="section" id="mapa">
+      <h2>Mapa Interativo da Situação Hídrica</h2>
+      <p>O mapa a seguir mostra a divisão das regiões brasileiras, com marcadores interativos indicando as principais características relacionadas à disponibilidade hídrica. Os dados se baseiam em indicadores da ANA e do IBGE.</p>
+      <div id="mapid"></div>
+    </div>
+
+    <div class="section" id="chuvas">
+      <h2>Índice Pluviométrico por Região</h2>
+      <p>O gráfico abaixo representa a média anual de precipitação em milímetros (mm) por região, com base em registros históricos de pluviômetros dos últimos 10 anos, segundo a ANA e o INMET.</p>
+      <canvas id="chartChuvas"></canvas>
+    </div>
+
+    <div class="section" id="dicas">
+      <h2>Como você pode ajudar?</h2>
+      <p>Confira algumas dicas e recursos para economizar água e ajudar a promover o uso consciente dos recursos hídricos:</p>
+      <ul>
+        <li>Feche a torneira enquanto escova os dentes ou lava a louça.</li>
+        <li>Reaproveite água da chuva para irrigação e limpeza.</li>
+        <li>Conserte vazamentos imediatamente.</li>
+        <li><a href="https://www.youtube.com/watch?v=J6v9-VJgULw" target="_blank">Vídeo: Como economizar água em casa (YouTube)</a></li>
+        <li><a href="https://www.gov.br/ana/pt-br" target="_blank">Agência Nacional de Águas - ANA</a></li>
+        <li><a href="https://www.un.org/sustainabledevelopment/pt/water-and-sanitation/" target="_blank">ODS 6 na ONU</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const ctxAgua = document.getElementById('chartAgua').getContext('2d');
+    new Chart(ctxAgua, {
+      type: 'bar',
+      data: {
+        labels: ['Norte', 'Nordeste', 'Sudeste', 'Sul', 'Centro-Oeste'],
+        datasets: [{
+          label: 'Água tratada (%)',
+          data: [58.3, 67.4, 94.2, 92.8, 86.1],
+          backgroundColor: 'rgba(54, 162, 235, 0.6)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 100 } }
+      }
+    });
+
+    const ctxReserv = document.getElementById('chartReservatorios').getContext('2d');
+    new Chart(ctxReserv, {
+      type: 'pie',
+      data: {
+        labels: ['Sudeste', 'Nordeste', 'Centro-Oeste', 'Sul', 'Norte'],
+        datasets: [{
+          label: 'Reservatórios críticos (%)',
+          data: [29.8, 52.7, 33.4, 22.5, 41.2],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)'
+          ]
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    const ctxChuvas = document.getElementById('chartChuvas').getContext('2d');
+    new Chart(ctxChuvas, {
+      type: 'line',
+      data: {
+        labels: ['Norte', 'Nordeste', 'Sudeste', 'Sul', 'Centro-Oeste'],
+        datasets: [{
+          label: 'Pluviometria (mm)',
+          data: [2200, 800, 1200, 1600, 1400],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.3
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    const map = L.map('mapid').setView([-15.78, -47.93], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    const regioes = [
+      { nome: 'Norte – Baixo acesso à água tratada', lat: -1.45, lon: -48.5 },
+      { nome: 'Nordeste – Alta vulnerabilidade hídrica', lat: -8.05, lon: -34.9 },
+      { nome: 'Sudeste – Alta cobertura e consumo', lat: -23.5, lon: -46.6 },
+      { nome: 'Sul – Bons índices de tratamento', lat: -30.0, lon: -51.2 },
+      { nome: 'Centro-Oeste – Média estrutura e perdas', lat: -15.6, lon: -56.1 }
+    ];
+    regioes.forEach(r => L.marker([r.lat, r.lon]).addTo(map).bindPopup(`<b>${r.nome}</b>`));
+  </script>
+</body>
+</html>
